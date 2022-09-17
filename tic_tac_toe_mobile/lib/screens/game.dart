@@ -23,7 +23,7 @@ class _GameState extends State<Game> {
     Widget container = InkWell(
       onTap: () => {
         print('clicked box at $xPos $yPos'),
-        socket.emitPlayEvent('O', xPos, yPos)
+        socket.emitPlayEvent(myLetter, xPos, yPos)
       },
       child: Container(
         width: 90,
@@ -44,7 +44,7 @@ class _GameState extends State<Game> {
         ),
         child: Text(
           // the box contains "empty" for specification if its empty, we dont want that in the ui
-          roomData.boxes[xPos][yPos].replaceAll('empty', ''),
+          roomData.boxes[yPos][xPos].replaceAll('empty', ''),
           style: generateTextStyle(30),
         ),
       ),
@@ -89,12 +89,22 @@ class _GameState extends State<Game> {
     });
   }
 
+  /// Returns the letter of the user
+  void getMyLetter(RoomData roomData) {
+    if (roomData.players['X'] == socket.getId()) {
+      myLetter = 'X';
+    } else {
+      myLetter = 'O';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
     // extracting the passed arguments(information of the room) from the context
     if (roomData == null) {
       roomData = ModalRoute.of(context)!.settings.arguments as RoomData;
+      getMyLetter(roomData);
     }
 
     checkForTurns();

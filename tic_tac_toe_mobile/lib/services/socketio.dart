@@ -1,6 +1,11 @@
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
-enum ListenableEvents { joined_room, error, turn, game_over }
+enum ListenableEvents {
+  joined_room,
+  error,
+  turn,
+  game_over,
+}
 
 enum EmmitableEvents { join_room, play, create_room, leave_room }
 
@@ -13,48 +18,52 @@ extension ToString on Enum {
 /// This class creates a modal for the socket io functions that will be used in all the screens.
 class Socket {
   // main socket object
-  late IO.Socket socket;
+  late IO.Socket _socket;
 
   final String backendUrl = 'http://192.168.29.79:5000';
 
   /// Constructor, initializes the socket object
   Socket() {
-    this.socket = IO.io(backendUrl, <String, dynamic>{
+    this._socket = IO.io(backendUrl, <String, dynamic>{
       "transports": ["websocket"],
       "autoConnect": false,
     });
   }
 
+  String? getId() {
+    return _socket.id;
+  }
+
   void connect() {
-    socket.connect();
+    _socket.connect();
   }
 
   void addConnectionListener(void onConnection(dynamic)) {
-    socket.onConnect(onConnection);
+    _socket.onConnect(onConnection);
   }
 
   void addConnectionErrorListener(void onConnectionError(dynamic)) {
-    socket.onConnectError(onConnectionError);
+    _socket.onConnectError(onConnectionError);
   }
 
   void addJoinedRoomListener(void onJoinedRoom(dynamic)) {
-    socket.on(ListenableEvents.joined_room.toShortString(), onJoinedRoom);
+    _socket.on(ListenableEvents.joined_room.toShortString(), onJoinedRoom);
   }
 
   void addErrorListener(void onError(dynamic)) {
-    socket.on(ListenableEvents.error.toShortString(), onError);
+    _socket.on(ListenableEvents.error.toShortString(), onError);
   }
 
   void addTurnListener(void onTurn(dynamic)) {
-    socket.on(ListenableEvents.turn.toShortString(), onTurn);
+    _socket.on(ListenableEvents.turn.toShortString(), onTurn);
   }
 
   void addGameOverListener(void onGameOver(dynamic)) {
-    socket.on(ListenableEvents.game_over.toShortString(), onGameOver);
+    _socket.on(ListenableEvents.game_over.toShortString(), onGameOver);
   }
 
   void emitJoinRoomEvent(String roomId) {
-    socket.emit(EmmitableEvents.join_room.toShortString(), roomId);
+    _socket.emit(EmmitableEvents.join_room.toShortString(), roomId);
   }
 
   void emitPlayEvent(String letter, int xPosition, int yPosition) {
@@ -64,15 +73,15 @@ class Socket {
       'xPosition': xPosition,
       'yPosition': yPosition,
     };
-    socket.emit(EmmitableEvents.play.toShortString(), arguments);
+    _socket.emit(EmmitableEvents.play.toShortString(), arguments);
   }
 
   void emitLeaveRoomEvent() {
-    socket.emit(EmmitableEvents.leave_room.toShortString());
+    _socket.emit(EmmitableEvents.leave_room.toShortString());
   }
 
   void emitCreateRoomEvent() {
-    socket.emit(EmmitableEvents.create_room.toShortString());
+    _socket.emit(EmmitableEvents.create_room.toShortString());
   }
 }
 

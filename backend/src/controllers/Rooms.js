@@ -76,6 +76,7 @@ function handleJoin(socket, roomId, io) {
     socket.join(roomId);
     socket.emit('joined_room', { roomData: room });
     console.log('joined the room');
+
     // starting the game
     emitTurn(roomId, io);
   } else {
@@ -114,8 +115,8 @@ function handlePlay(args) {
     socket.emit('error', 'not your turn!');
     return;
   }
-
-  console.log(`row: ${boxes[yPosition]}`);
+  console.log(`xPosition: ${xPosition} yPosition: ${yPosition}`);
+  console.log(`row: ${room.boxes[yPosition]}`);
 
   if (room.boxes[yPosition][xPosition] != 'empty') {
     console.log('box already full!');

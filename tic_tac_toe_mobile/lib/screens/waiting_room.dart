@@ -27,11 +27,24 @@ class _WaitingRoomState extends State<WaitingRoom> {
     );
   }
 
+  /// switches the screen when recieves turn event from the server
+  void addTurnListener() {
+    socket.addTurnListener((data) {
+      Navigator.pushNamed(
+        context,
+        '/game',
+        arguments: RoomData.extractFromMap(data['roomData']),
+      );
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
 
     roomData = ModalRoute.of(context)!.settings.arguments as RoomData;
+
+    addTurnListener();
 
     return Scaffold(
       backgroundColor: appBackgroundColor,

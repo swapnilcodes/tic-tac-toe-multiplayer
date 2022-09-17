@@ -5,7 +5,7 @@
 
 version:
   revision: 3c0bee85b8e43b860877922bdc411a7333db4d32
-  channel: dev
+  channel: unknown
 
 project_type: app
 
