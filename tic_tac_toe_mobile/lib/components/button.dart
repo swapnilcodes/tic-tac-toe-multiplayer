@@ -21,7 +21,7 @@ class _AppButtonState extends State<AppButton> {
   double button_width = 310;
   double button_height = 70;
 
-  /// Creates a nice little animation by tweaking with the size of the button
+  /// Creates a animation by tweaking with the size of the button
   void animate() async {
     setState(() {
       button_width = 315;

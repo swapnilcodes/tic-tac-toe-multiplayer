@@ -77,15 +77,16 @@ class _GameState extends State<Game> {
     );
   }
 
-  /// checking for turn
-  void checkForTurns() {
+  /// checking for updates
+  void checkForUpdates() {
     print('checking for turns');
-    socket.addTurnListener((data) {
+    socket.addUpdateListener((data) {
       print('turn recieved ');
-
-      setState(() {
-        roomData = RoomData.extractFromMap(data);
-      });
+      if (mounted) {
+        setState(() {
+          roomData = RoomData.extractFromMap(data);
+        });
+      }
     });
   }
 
@@ -98,44 +99,64 @@ class _GameState extends State<Game> {
     }
   }
 
+  /// Navigates to the result page if the game is over
+  void checkGameState(RoomData roomData) {
+    if (roomData.gameOver) {
+      String gameState = roomData.winningLetter == null
+          ? 'draw'
+          : roomData.winningLetter == myLetter
+              ? 'win'
+              : 'lose';
+
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        Navigator.pushReplacementNamed(
+          context,
+          '/result',
+          arguments: gameState,
+        );
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
+
     // extracting the passed arguments(information of the room) from the context
     if (roomData == null) {
       roomData = ModalRoute.of(context)!.settings.arguments as RoomData;
       getMyLetter(roomData);
     }
 
-    checkForTurns();
+    checkForUpdates();
+    checkGameState(roomData);
+
     return Scaffold(
       backgroundColor: appBackgroundColor,
       body: SingleChildScrollView(
-        child: Container(
-          width: screenSize.width,
-          height: screenSize.height,
-          margin: EdgeInsets.only(top: screenSize.height / 9),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(
-                'TIC-TAC-TOE',
-                style: generateTextStyle(40),
-                textAlign: TextAlign.center,
-              ),
-              SizedBox(
-                height: screenSize.height / 10,
-              ),
-              getGrid(),
-              SizedBox(
-                height: screenSize.height / 9,
-              ),
-              Text(
-                "${roomData.turn}'s turn",
-                style: generateTextStyle(30),
-              )
-            ],
-          ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SizedBox(
+              height: screenSize.height / 10,
+            ),
+            Text(
+              'TIC-TAC-TOE',
+              style: generateTextStyle(40),
+              textAlign: TextAlign.center,
+            ),
+            SizedBox(
+              height: screenSize.height / 10,
+            ),
+            getGrid(),
+            SizedBox(
+              height: screenSize.height / 9,
+            ),
+            Text(
+              "${roomData.turn}'s turn",
+              style: generateTextStyle(30),
+            )
+          ],
         ),
       ),
     );

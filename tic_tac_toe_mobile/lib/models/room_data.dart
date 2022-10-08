@@ -5,9 +5,19 @@ class RoomData {
   late List<dynamic> boxes;
   late final Map<String, dynamic> players;
   late dynamic turn;
-  RoomData(this.roomId, this.boxes, this.players, this.turn);
+  late dynamic winningLetter;
+  late bool gameOver;
 
-  /// Seperate Constructor so that we can directly pass the socket io maps directly into it and it will bisect it into the variables
+  RoomData(
+    this.roomId,
+    this.boxes,
+    this.players,
+    this.turn,
+    this.winningLetter,
+    this.gameOver,
+  );
+
+  /// Seperate Constructor so that we can directly pass the maps as the argument
   RoomData.extractFromMap(Map<String, dynamic> roomData) {
     print(roomData['players']);
     // making players as a seperate variable because socket io returns it as a _InternalLinkedHashMap and this class requires it as a Map
@@ -15,18 +25,11 @@ class RoomData {
       'X': roomData['players']['X'],
       'O': roomData['players']['O'],
     };
-
     this.roomId = roomData['roomId'];
     this.boxes = roomData['boxes'];
     this.players = players;
     this.turn = roomData['turn'];
-  }
-
-  void setBoxes(List<dynamic> boxes) {
-    this.boxes = boxes;
-  }
-
-  void setTurn(turn) {
-    this.turn = turn;
+    this.winningLetter = roomData['winningLetter'];
+    this.gameOver = roomData['gameOver'];
   }
 }

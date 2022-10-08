@@ -1,8 +1,9 @@
+/// Home page of the application
+
 import 'package:flutter/material.dart';
 import 'package:tic_tac_toe_mobile/common/styles.dart';
 import 'package:tic_tac_toe_mobile/components/button.dart';
 import 'package:tic_tac_toe_mobile/common/colors.dart';
-import 'package:tic_tac_toe_mobile/common/fonts.dart';
 import 'package:tic_tac_toe_mobile/components/modal.dart';
 import 'package:tic_tac_toe_mobile/models/room_data.dart';
 import 'package:tic_tac_toe_mobile/services/socketio.dart';
@@ -10,6 +11,7 @@ import 'package:tic_tac_toe_mobile/services/socketio.dart';
 class HomePage extends StatelessWidget {
   final Socket socket = SocketExporter.getSocket();
 
+  /// creates a room and redirects to the [WaitingRoom] page
   void createRoom(BuildContext context) {
     // opening a modal for giving feedback to the user
     Modal modal = new Modal(
@@ -22,7 +24,7 @@ class HomePage extends StatelessWidget {
     socket.addJoinedRoomListener((data) {
       modal.close();
 
-      Navigator.pushNamed(
+      Navigator.pushReplacementNamed(
         context,
         '/waitingRoom',
         arguments: RoomData.extractFromMap(data['roomData']),
@@ -66,7 +68,7 @@ class HomePage extends StatelessWidget {
             ),
             SizedBox(height: screenSize.height / 20),
             AppButton(
-              onTap: () => print('hello world'),
+              onTap: () => Navigator.pushNamed(context, '/about'),
               text: 'About the Developer',
             ),
           ],

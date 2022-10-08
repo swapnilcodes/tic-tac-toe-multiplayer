@@ -7,7 +7,7 @@ const {
   handlePlay,
   handleLeave,
   handleDisconnect,
-} = require('./controllers/Rooms.js');
+} = require('./controllers/eventHandlers.js');
 
 // configuring the server
 const httpServer = createServer((req, res) => {
@@ -23,32 +23,23 @@ const io = new Server(httpServer, {
 
 // handling socket io connections
 io.on('connection', (socket) => {
-  console.log('new connection: ' + socket.id);
-  socket.on('create_room', () => {
-    console.log('creating room');
-    handleCreate(socket);
-  });
+  socket.on('create_room', () => handleCreate(socket));
 
-  socket.on('join_room', (roomId) => {
-    console.log('joining room');
-    handleJoin(socket, roomId, io);
-  });
-  socket.on('play', (args) => {
+  socket.on('join_room', (args) => handleJoin(socket, args.roomId, io));
+
+  socket.on('play', (args) =>
     handlePlay({
       socket,
       io,
       letter: args.letter,
       xPosition: args.xPosition,
       yPosition: args.yPosition,
-    });
-  });
-  socket.on('leave_room', () => {
-    console.log('left room!');
-    handleLeave(socket);
-  });
-  socket.on('disconnect', () => {
-    handleDisconnect(socket);
-  });
+    })
+  );
+
+  socket.on('leave_room', () => handleLeave(socket));
+
+  socket.on('disconnect', () => handleDisconnect(socket));
 });
 
 // starting the server

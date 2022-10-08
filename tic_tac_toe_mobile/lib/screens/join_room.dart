@@ -25,7 +25,7 @@ class _JoinRoomState extends State<JoinRoom> {
     // once joined the room navigating to the game screen.
     socket.addJoinedRoomListener((data) {
       print(data);
-      Navigator.pushNamed(
+      Navigator.pushReplacementNamed(
         context,
         '/game',
         arguments: RoomData.extractFromMap(data['roomData']),

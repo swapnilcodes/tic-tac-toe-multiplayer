@@ -1,11 +1,6 @@
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
-enum ListenableEvents {
-  joined_room,
-  error,
-  turn,
-  game_over,
-}
+enum ListenableEvents { joined_room, error, update, game_over }
 
 enum EmmitableEvents { join_room, play, create_room, leave_room }
 
@@ -47,23 +42,23 @@ class Socket {
   }
 
   void addJoinedRoomListener(void onJoinedRoom(dynamic)) {
-    _socket.on(ListenableEvents.joined_room.toShortString(), onJoinedRoom);
+    _socket.once(ListenableEvents.joined_room.toShortString(), onJoinedRoom);
   }
 
   void addErrorListener(void onError(dynamic)) {
     _socket.on(ListenableEvents.error.toShortString(), onError);
   }
 
-  void addTurnListener(void onTurn(dynamic)) {
-    _socket.on(ListenableEvents.turn.toShortString(), onTurn);
+  void addUpdateListener(void onTurn(dynamic)) {
+    _socket.on(ListenableEvents.update.toShortString(), onTurn);
   }
 
   void addGameOverListener(void onGameOver(dynamic)) {
-    _socket.on(ListenableEvents.game_over.toShortString(), onGameOver);
+    _socket.once(ListenableEvents.game_over.toShortString(), onGameOver);
   }
 
   void emitJoinRoomEvent(String roomId) {
-    _socket.emit(EmmitableEvents.join_room.toShortString(), roomId);
+    _socket.emit(EmmitableEvents.join_room.toShortString(), {'roomId': roomId});
   }
 
   void emitPlayEvent(String letter, int xPosition, int yPosition) {

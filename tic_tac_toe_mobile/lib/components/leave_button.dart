@@ -13,7 +13,7 @@ class _LeaveButtonState extends State<LeaveButton> {
   @override
   Widget build(BuildContext context) {
     return TextButton(
-      onPressed: () => widget.onTap,
+      onPressed: () => widget.onTap(),
       style: ButtonStyle(
         overlayColor: MaterialStateProperty.resolveWith(
           (states) => Color.fromARGB(37, 255, 147, 143),
