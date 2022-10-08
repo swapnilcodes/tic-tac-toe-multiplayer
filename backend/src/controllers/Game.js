@@ -62,7 +62,7 @@ function checkWin(boxes) {
   for (let i = 0; i < 3 && winningLetter == null; i++) {
     for (let j = 0; j < 3; j++) {
       let currentLetter = boxes[i][j]; // letter on the current X & Y positions
-      verticalBox = boxes[j - 1];
+      let verticalBox = boxes[j - 1];
 
       let currentVerticalLetter = boxes[j][i];
 
@@ -92,9 +92,7 @@ function checkWin(boxes) {
         );
         horizontalStreak = horizontalStreakData.streak;
         winningLetter = horizontalStreakData.winningLetter;
-      }
 
-      if (winningLetter == null) {
         // checking for vertical streak
         let verticalStreakData = checkStreaks(
           verticalStreak,
