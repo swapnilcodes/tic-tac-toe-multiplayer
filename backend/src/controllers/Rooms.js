@@ -14,10 +14,9 @@ function addRoom(room) {
  * @returns the room which contains the socket connection provided
  */
 function getRoomOfAPlayer(socket) {
-  const room = rooms.filter(
+  return rooms.filter(
     (value) => value.players.X === socket.id || value.players.O == socket.id
   )[0];
-  return room;
 }
 
 /**
