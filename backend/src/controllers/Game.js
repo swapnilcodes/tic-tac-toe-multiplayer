@@ -81,27 +81,28 @@ function checkWin(boxes) {
         diagonalStreak = diagonalStreakData.streak;
         winningLetter = diagonalStreakData.winningLetter;
         lastDiagonalLetter = currentLetter;
+        if (winningLetter) break;
       }
 
-      if (winningLetter == null) {
-        // checking for horizontal streak
-        let horizontalStreakData = checkStreaks(
-          horizontalStreak,
-          lastHorizontalLetter,
-          currentLetter
-        );
-        horizontalStreak = horizontalStreakData.streak;
-        winningLetter = horizontalStreakData.winningLetter;
+      // checking for horizontal streak
+      let horizontalStreakData = checkStreaks(
+        horizontalStreak,
+        lastHorizontalLetter,
+        currentLetter
+      );
+      horizontalStreak = horizontalStreakData.streak;
+      winningLetter = horizontalStreakData.winningLetter;
+      if (winningLetter) break;
 
-        // checking for vertical streak
-        let verticalStreakData = checkStreaks(
-          verticalStreak,
-          lastVerticalLetter,
-          currentVerticalLetter
-        );
-        verticalStreak = verticalStreakData.streak;
-        winningLetter = verticalStreakData.winningLetter;
-      }
+      // checking for vertical streak
+      let verticalStreakData = checkStreaks(
+        verticalStreak,
+        lastVerticalLetter,
+        currentVerticalLetter
+      );
+      verticalStreak = verticalStreakData.streak;
+      winningLetter = verticalStreakData.winningLetter;
+      if (winningLetter) break;
 
       lastHorizontalLetter = currentLetter;
     }
