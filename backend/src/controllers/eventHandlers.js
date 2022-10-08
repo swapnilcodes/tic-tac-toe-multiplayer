@@ -90,8 +90,9 @@ function handlePlay(args) {
 
   let room = getRoomOfAPlayer(socket);
 
-  if (room === null) {
+  if (room == null || !room) {
     socket.emit('error', 'Please join a room before!');
+    return;
   }
 
   if (room.turn !== letter) {
