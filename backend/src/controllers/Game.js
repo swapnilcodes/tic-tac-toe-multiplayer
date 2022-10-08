@@ -92,7 +92,7 @@ function checkWin(boxes) {
       );
       horizontalStreak = horizontalStreakData.streak;
       winningLetter = horizontalStreakData.winningLetter;
-      if (winningLetter) break;
+      if (winningLetter != null) break;
 
       // checking for vertical streak
       let verticalStreakData = checkStreaks(
@@ -102,7 +102,7 @@ function checkWin(boxes) {
       );
       verticalStreak = verticalStreakData.streak;
       winningLetter = verticalStreakData.winningLetter;
-      if (winningLetter) break;
+      if (winningLetter != null) break;
 
       lastHorizontalLetter = currentLetter;
     }
