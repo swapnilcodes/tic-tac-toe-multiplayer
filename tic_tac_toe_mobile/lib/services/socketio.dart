@@ -15,7 +15,8 @@ class Socket {
   // main socket object
   late IO.Socket _socket;
 
-  final String backendUrl = 'http://192.168.29.79:5000';
+  final String backendUrl =
+      'https://tic-tac-toe-multiplayer-backend-api.onrender.com/';
 
   /// Constructor, initializes the socket object
   Socket() {
