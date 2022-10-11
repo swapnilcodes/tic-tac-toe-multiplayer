@@ -44,6 +44,7 @@ class _JoinRoomState extends State<JoinRoom> {
           margin: EdgeInsets.only(top: screenSize.height / 8),
           width: screenSize.width,
           height: screenSize.height,
+          padding: EdgeInsets.symmetric(horizontal: 15),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [

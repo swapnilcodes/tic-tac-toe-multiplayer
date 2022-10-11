@@ -41,6 +41,9 @@ class _AboutState extends State<About> {
               myInfo,
               style: generateTextStyle(17),
             ),
+            SizedBox(
+              height: size.height / 12,
+            ),
             AppButton(
               onTap: () => Navigator.pop(context),
               text: "Go Back To Home",

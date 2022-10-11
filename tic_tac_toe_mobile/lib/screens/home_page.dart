@@ -47,7 +47,7 @@ class HomePage extends StatelessWidget {
           children: [
             Text(
               "TIC-TAC-TOE",
-              style: generateTextStyle(40),
+              style: generateTextStyle(50),
             ),
             SizedBox(
               height: screenSize.height / 20,

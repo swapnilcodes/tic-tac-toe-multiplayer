@@ -61,14 +61,8 @@ function checkWin(boxes) {
   // iterating through the boxes to check for streaks
   for (let i = 0; i < 3 && winningLetter == null; i++) {
     for (let j = 0; j < 3; j++) {
-      let currentLetter = boxes[i][j]; // letter on the current X & Y positions
-      let verticalBox = boxes[j - 1];
-
+      let currentLetter = boxes[i][j]; // letter on the current X & Y position
       let currentVerticalLetter = boxes[j][i];
-
-      if (verticalBox) {
-        lastVerticalLetter = verticalBox[i];
-      }
 
       if (i == j) {
         // checking for diagonal streak
@@ -81,7 +75,7 @@ function checkWin(boxes) {
         diagonalStreak = diagonalStreakData.streak;
         winningLetter = diagonalStreakData.winningLetter;
         lastDiagonalLetter = currentLetter;
-        if (winningLetter) break;
+        if (winningLetter != null) break;
       }
 
       // checking for horizontal streak
@@ -104,7 +98,8 @@ function checkWin(boxes) {
       winningLetter = verticalStreakData.winningLetter;
       if (winningLetter != null) break;
 
-      lastHorizontalLetter = currentLetter;
+      lastVerticalLetter = j < 2 ? currentVerticalLetter : null;
+      lastHorizontalLetter = i < 2 ? currentLetter : null;
     }
   }
 
