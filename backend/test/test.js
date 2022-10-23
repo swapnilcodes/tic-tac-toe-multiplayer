@@ -86,6 +86,22 @@ describe('GameLogic', function () {
         ['empty', 'empty', 'empty'],
       ];
       assert.equal(checkWin(boxes), null);
+
+      // test case 7
+      boxes = [
+        ['X', 'empty', 'empty'],
+        ['X', 'O', 'O'],
+        ['O', 'empty', 'empty'],
+      ];
+      assert.equal(checkWin(boxes), null);
+
+      // test case 8
+      boxes = [
+        ['empty', 'X', 'empty'],
+        ['X', 'O', 'empty'],
+        ['X', 'empty', 'empty'],
+      ];
+      assert.equal(checkWin(boxes), null);
     });
   });
   describe('#boxesRemaning()', function () {

@@ -63,7 +63,6 @@ function checkWin(boxes) {
     for (let j = 0; j < 3; j++) {
       let currentLetter = boxes[i][j]; // letter on the current X & Y position
       let currentVerticalLetter = boxes[j][i];
-
       if (i == j) {
         // checking for diagonal streak
         // putting the if statement because diagonal point is where X & Y positions match!
@@ -99,7 +98,7 @@ function checkWin(boxes) {
       if (winningLetter != null) break;
 
       lastVerticalLetter = j < 2 ? currentVerticalLetter : null;
-      lastHorizontalLetter = i < 2 ? currentLetter : null;
+      lastHorizontalLetter = j < 2 ? currentLetter : null;
     }
   }
 
